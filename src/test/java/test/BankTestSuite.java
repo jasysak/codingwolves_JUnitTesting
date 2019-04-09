@@ -2,14 +2,49 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import org.junit.Before;
 import org.junit.Test;
+
+import banking.Account;
+import banking.Bank;
+import banking.Customer;
 
 /**
  * @author David
  *
  */
 public class BankTestSuite {
-
+	private SortedSet<Account> allAccounts = new TreeSet<>();
+	private List<Account> accounts = new ArrayList();
+	private SortedSet<Customer> allCustomers = new TreeSet<>();
+	private List<Customer> customer = new ArrayList();
+	private final Map<String, Customer> customers = new HashMap<>();
+	private Bank bank;
+	private Customer customer1;
+	private String cust1FirstName;
+	private String cust1LastName;
+	private Customer customer2;
+	private String cust2FirstName;
+	private String cust2LastName;
+	
+	@Before
+	public void init() {
+		bank = new Bank("DA Banking");
+		cust1LastName = "Alvarez";
+		cust1FirstName = "David";
+		cust2LastName = "Mercury";
+		cust2FirstName = "Freddie";
+		customer1 = new Customer(bank, cust1LastName, cust1FirstName);
+		customer2 = new Customer(bank, cust2LastName, cust2FirstName);
+		customers.clear(); 
+	}
 	/**
 	 * Test method for {@link banking.Bank#addAccountWizard()}.
 	 */
@@ -27,19 +62,17 @@ public class BankTestSuite {
 	}
 
 	/**
-	 * Test method for {@link banking.Bank#addCustomerWizard()}.
-	 */
-	@Test
-	public void testAddCustomerWizard() {
-		fail("Not yet implemented");
-	}
-
-	/**
 	 * Test method for {@link banking.Bank#addCustomer(java.lang.String, java.lang.String)}.
 	 */
 	@Test
 	public void testAddCustomer() {
-		fail("Not yet implemented");
+		final String customerid;
+		customerid = bank.addCustomer(cust1LastName, cust1FirstName);
+		customers.put(customerid, customer1);
+		String testResult = customers.get(customerid).getFirstName();
+		
+		assertEquals(customers.size(), 1);
+		assertEquals(testResult, cust1FirstName);
 	}
 
 	/**
@@ -47,7 +80,14 @@ public class BankTestSuite {
 	 */
 	@Test
 	public void testRemoveCustomer() {
-		fail("Not yet implemented");
+		final String customerid;
+		customerid = bank.addCustomer(cust1LastName, cust1FirstName);
+		customers.put(customerid, customer1);
+		bank.removeCustomer(customerid);
+		
+		String testResult = customers.get(customerid).getFirstName();
+		
+		assertEquals(testResult, null);
 	}
 
 	/**
@@ -55,7 +95,9 @@ public class BankTestSuite {
 	 */
 	@Test
 	public void testGetAllCustomers() {
-		fail("Not yet implemented");
+		allCustomers = bank.getAllCustomers();
+		
+		
 	}
 
 	/**
