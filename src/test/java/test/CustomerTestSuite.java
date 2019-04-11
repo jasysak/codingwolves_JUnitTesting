@@ -1,6 +1,3 @@
-/**
- * 
- */
 package test;
 
 import static org.junit.Assert.*;
@@ -15,27 +12,24 @@ import banking.Account;
 import banking.Bank;
 import banking.Customer;
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
 /**
- * @author David
+ * @author David Alvarez, 4/10/19
  *
  */
-public class CustomerTestSuite extends Account{
-	public CustomerTestSuite(Customer cust, double initialBalance, String accountDescription) {
-		super(cust, initialBalance, accountDescription);
-		// TODO Auto-generated constructor stub
-	}
+public class CustomerTestSuite {
 
 	private Bank bank;
 	private String customerId;
     private String lastName;
     private String firstName;
     private SortedSet<Account> customerAccounts = new TreeSet<>();
+    private SortedSet<Account> testGetCustAccoun = new TreeSet<>();
     private Customer customer1;
     private double initialBalance;
     private String custDesc1;
     private String custName1;
-    private Account account1;
 	
 	@Before
 	public void init() {
@@ -46,7 +40,7 @@ public class CustomerTestSuite extends Account{
 		custDesc1 = "Test Account";
 		customer1 = new Customer(bank, lastName, firstName);
 		custName1 = customer1.getFirstName();
-		
+		testGetCustAccoun.clear();
 	}
 
 	/**
@@ -54,7 +48,14 @@ public class CustomerTestSuite extends Account{
 	 */
 	@Test
 	public void testGetCustomerAccounts() {
+		final double initialBalance = 100.12;
+		final String desc = "This is a test Account";
 		
+		customerAccounts.add(customer1.addSavingsAccount(initialBalance, desc));
+		testGetCustAccoun = customer1.getCustomerAccounts();
+		
+		assertThat(testGetCustAccoun.contains(null), is(false));
+		assertEquals(testGetCustAccoun.size(), hasSize(1));
 	}
 
 	/**
@@ -62,7 +63,13 @@ public class CustomerTestSuite extends Account{
 	 */
 	@Test
 	public void testYtdFees() {
-		fail("Not yet implemented");
+		double expectedResult = 155.45;
+		double result;
+		
+		result = customer1.ytdFees();
+		
+		assertNotNull(result);
+		assertEquals(result, expectedResult);
 	}
 
 	/**
@@ -70,7 +77,13 @@ public class CustomerTestSuite extends Account{
 	 */
 	@Test
 	public void testYtdInterest() {
-		fail("Not yet implemented");
+		double expectedResult = 100.15;
+		double result;
+		
+		result = customer1.ytdInterest();
+		
+		assertNotNull(result);
+		assertEquals(result, expectedResult);
 	}
 
 	/**
@@ -91,7 +104,14 @@ public class CustomerTestSuite extends Account{
 	 */
 	@Test
 	public void testRemoveAccount() {
+		String test;
+		final double initialBalance = 100.12;
+		final String desc = "This is a test Account";
 		
+		test = customer1.addSavingsAccount(initialBalance, desc).getAccountId();
+		customer1.removeAccount(test);
+		
+		//assert
 	}
 
 	/**
