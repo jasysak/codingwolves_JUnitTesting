@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +25,6 @@ import banking.Customer;
  */
 public class BankTestSuite {
 	private SortedSet<Account> allAccounts = new TreeSet<>();
-	private SortedSet<Customer> testAllCustomers;
 	private List<Account> accounts = new ArrayList();
 	private SortedSet<Customer> allCustomers = new TreeSet<>();
 	private List<Customer> customer = new ArrayList();
@@ -94,12 +94,15 @@ public class BankTestSuite {
 	 */
 	@Test
 	public void testGetAllCustomers() {
-		testAllCustomers.add(customer1);
-		testAllCustomers.add(customer2);
+		final String customerid1;
+		final String customerid2;
+		customerid1 = bank.addCustomer(cust1LastName, cust1FirstName);
+		customerid2 = bank.addCustomer(cust2LastName, cust2FirstName);
+		customers.put(customerid2, customer2);
+		customers.put(customerid1, customer1);
 		allCustomers = bank.getAllCustomers();
 		
-		//assertThat(testAllCustomers, is(allCustomers));
-		
+		assertThat(allCustomers, IsIterableContainingInOrder.contains(customer1, customer2));
 	}
 
 	/**
@@ -107,7 +110,12 @@ public class BankTestSuite {
 	 */
 	@Test
 	public void testGetCustomerString() {
-		fail("Not yet implemented");
+		String testcustid = customer1.getCustomerId();
+		final Customer result;
+
+		result = bank.getCustomer(testcustid);
+		
+		assertEquals(result.getCustomerId(), customer1.getCustomerId());
 	}
 
 	/**
@@ -134,6 +142,8 @@ public class BankTestSuite {
 		customers.put(customerid2, customer2);
 		
 		accounts = bank.getCustomersAccounts(customerid1);
+		
+		assertThat(accounts.contains(null), is(false));
 		
 	}
 

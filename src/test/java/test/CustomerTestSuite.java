@@ -11,6 +11,8 @@ import org.junit.Test;
 import banking.Account;
 import banking.Bank;
 import banking.Customer;
+import banking.SavingsAccount;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
@@ -21,25 +23,18 @@ import static org.hamcrest.Matchers.*;
 public class CustomerTestSuite {
 
 	private Bank bank;
-	private String customerId;
     private String lastName;
     private String firstName;
     private SortedSet<Account> customerAccounts = new TreeSet<>();
     private SortedSet<Account> testGetCustAccoun = new TreeSet<>();
     private Customer customer1;
-    private double initialBalance;
-    private String custDesc1;
-    private String custName1;
 	
 	@Before
 	public void init() {
 		bank = new Bank("DA Banking");
 		lastName = "Alvarez";
 		firstName = "David";
-		initialBalance = 100.15;
-		custDesc1 = "Test Account";
 		customer1 = new Customer(bank, lastName, firstName);
-		custName1 = customer1.getFirstName();
 		testGetCustAccoun.clear();
 	}
 
@@ -104,14 +99,16 @@ public class CustomerTestSuite {
 	 */
 	@Test
 	public void testRemoveAccount() {
-		String test;
+		SavingsAccount test;
 		final double initialBalance = 100.12;
 		final String desc = "This is a test Account";
 		
-		test = customer1.addSavingsAccount(initialBalance, desc).getAccountId();
-		customer1.removeAccount(test);
+		test = customer1.addSavingsAccount(initialBalance, desc);
+		customerAccounts.add(test);
 		
-		//assert
+		customer1.removeAccount(test.getAccountId());
+		
+		assertEquals(customerAccounts.size(), 0);
 	}
 
 	/**
@@ -119,7 +116,17 @@ public class CustomerTestSuite {
 	 */
 	@Test
 	public void testGetAccount() {
-		fail("Not yet implemented");
+		SavingsAccount test;
+		Account result;
+		final double initialBalance = 100.12;
+		final String desc = "This is a test Account";
+		
+		test = customer1.addSavingsAccount(initialBalance, desc);
+		customerAccounts.add(test);
+		result = customer1.getAccount(test.getAccountId());
+		
+		assertNotNull(result);
+		assertEquals(test.getAccountDescription(), result.getAccountDescription());
 	}
 
 }
