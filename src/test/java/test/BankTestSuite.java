@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +11,14 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.hamcrest.collection.IsIterableContainingInOrder;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import banking.Account;
 import banking.Bank;
 import banking.Customer;
+import banking.SavingsAccount;
 
 /**
  * @author David Alvarez, 4/10/19
@@ -54,7 +55,16 @@ public class BankTestSuite {
 	 */
 	@Test
 	public void testGetAllAccounts() {
-		fail("Not yet implemented");
+		final double initialBalance1 = 56.12;
+		final String desc1 = "This is a test Account";
+		final double initialBalance2 = 75.13;
+		final String desc2 = "This is a test Account";
+		SavingsAccount savingAccoun1 = customer1.addSavingsAccount(initialBalance1, desc1);
+		SavingsAccount savingAccoun2 = customer2.addSavingsAccount(initialBalance2, desc2);
+		
+		allAccounts = bank.getAllAccounts();
+		
+		assertThat(allAccounts, IsIterableContainingInOrder.contains(savingAccoun1, savingAccoun2));
 	}
 
 	/**
@@ -135,16 +145,16 @@ public class BankTestSuite {
 	@Test
 	public void testGetCustomersAccounts() {
 		final String customerid1;
-		final String customerid2;
+		final double initialBalance = 56.12;
+		final String desc = "This is a test Account";
 		customerid1 = bank.addCustomer(cust1LastName, cust1FirstName);
-		customerid2 = bank.addCustomer(cust2LastName, cust2FirstName);
 		customers.put(customerid1, customer1);
-		customers.put(customerid2, customer2);
+		SavingsAccount savingAccoun = customer1.addSavingsAccount(initialBalance, desc);
 		
 		accounts = bank.getCustomersAccounts(customerid1);
 		
 		assertThat(accounts.contains(null), is(false));
-		
+		Assert.assertTrue(accounts.contains(savingAccoun));
 	}
 
 }
