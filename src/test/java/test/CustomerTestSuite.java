@@ -129,4 +129,15 @@ public class CustomerTestSuite {
 		assertEquals(test.getAccountDescription(), result.getAccountDescription());
 	}
 
+	/**
+	 * Test method for {@link banking.Customer#getAccount(java.lang.String)}.
+	 */
+	@Test
+	public void testGetNull() {
+		Account result;
+		String id = "1";
+		result = customer1.getAccount(id);
+		
+		assertNull(result);
+	}
 }

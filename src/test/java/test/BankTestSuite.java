@@ -127,6 +127,19 @@ public class BankTestSuite {
 		
 		assertEquals(result.getCustomerId(), customer1.getCustomerId());
 	}
+	
+	/**
+	 * Test method for {@link banking.Bank#getCustomer(java.lang.String)}.
+	 */
+	@Test
+	public void testGetNull() {
+		String testcustid = "4";
+		final Customer result;
+
+		result = bank.getCustomer(testcustid);
+		
+		assertNull(result);
+	}
 
 	/**
 	 * Test method for {@link banking.Bank#getCustomer(java.lang.String, java.lang.String)}.
