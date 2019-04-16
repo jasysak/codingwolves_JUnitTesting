@@ -1,22 +1,23 @@
 package test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.hamcrest.core.IsCollectionContaining;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import banking.Account;
 import banking.Bank;
 import banking.Customer;
+import banking.SavingsAccount;
 
 /*
- * BankTest.java 
+ * CustomerTest.java 
  * 
  * for COP 2805C JUnit Testing, Project #6
  * 
@@ -30,6 +31,16 @@ import banking.Customer;
  * 
 */
 
+/* methods in Customer not EXPLICITLY tested:
+ * 
+ * Customer(Bank, String, String) - constructor
+ * getBank() - simple getter
+ * getCustomerId() - simple getter
+ * getLastName() - simple getter
+ * getFirstName ()  - simple getter
+ * All @Override methods: toString, hashCode, equals, compareTo
+ * 
+ */
 class CustomerTest {
 	
 	// will definitely need some Sets of Account and Customer
@@ -65,12 +76,11 @@ class CustomerTest {
 	
 	@Test
 	void testCustomer() {
-		
+		// may add a test here from David's code if I run out of time to write one of my own
 	}
 
 	@Test
 	void testGetCustomerAccounts() {
-		
 		customersSet.add(cust1);
 		assertNotNull(customersSet);
 	}
@@ -78,13 +88,23 @@ class CustomerTest {
 	@Test
 	void testYtdFees() {
 		// maybe a test for a specific Fees value should be added?
-		assertNotNull(cust1.ytdFees());
+		// it is reasonable that ytdFees = 0.0 may be true for a valid
+		// working scenario
+		assertTrue(cust1.ytdFees() > 0.0);
+		
+		// the following assertion will pass every time since ytdFees() returns 0.0
+		// assertNotNull(cust1.ytdFees());
 	}
 
 	@Test
 	void testYtdInterest() {
 		// maybe a test for a specific Interest value should be added?
-		assertNotNull(cust1.ytdInterest());
+		// it is reasonable that ytdInterest = 0.0 may be true for a valid
+		// working scenario
+		assertTrue(cust1.ytdInterest() > 0.0);
+		
+		// the following assertion will pass every time since ytdInterest() returns 0.0
+		// assertNotNull(cust1.ytdInterest());
 	}
 
 	@Test
@@ -107,7 +127,16 @@ class CustomerTest {
 
 	@Test
 	void testGetAccount() {
-		fail("Not yet implemented");
+		double initBal = 1000.5;
+		String desc = "Test Account CustomerTest";
+		SavingsAccount test = cust1.addSavingsAccount(initBal, desc);
+		// not sure the accountsSet is really needed here, but
+		// since we have it, we can do an assert on the Set
+		accountsSet.add(test);
+		assertNotNull(cust1.getAccount(test.getAccountId()));
+		// following assert based on comment above - but does it actually
+		// tell us anything of value?
+		assertThat(accountsSet, IsCollectionContaining.hasItems(test));
 	}
 
 }

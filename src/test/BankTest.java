@@ -50,6 +50,16 @@ import banking.SavingsAccount;
  * After carefully reviewing David's code, this project becomes much easier. 
  */
 
+/* methods in Bank not EXPLICITLY tested:
+ * 
+ * Bank(String) - simple constructor
+ * main - Main method (not sure if this needs test, or even can be explicitly tested)
+ * getInsufficientFundsPenalty() 
+ * setInsufficientFuntsPenalty()
+ * getName() - this should be the same NAME for all cases
+ * 
+ */
+
 public class BankTest {
 	// will definitely need some Sets of Account and Customer
 	SortedSet<Account> accountsSet = new TreeSet<Account>();

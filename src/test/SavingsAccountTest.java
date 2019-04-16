@@ -20,7 +20,7 @@ import banking.Customer;
 import banking.SavingsAccount;
 
 /*
- * BankTest.java 
+ * SavingsAccountTest.java 
  * 
  * for COP 2805C JUnit Testing, Project #6
  * 
