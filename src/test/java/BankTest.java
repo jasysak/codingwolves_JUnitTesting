@@ -5,8 +5,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BankTest {
     private SortedSet<Account> customerAccounts = new TreeSet<>();
@@ -72,6 +71,7 @@ class BankTest {
         Customer customer1 = new Customer(bank,"Moriarty","James");
         Customer customer2 = new Customer(bank,"Holmes","Sherlock");
         customers.put(customerId1,customer1);
+        customers.put(customerId2,customer2);
         assertTrue(customers.containsKey(customerId1));
         assertEquals(customer1,customers.get(customerId1));
         assertTrue(customers.containsKey(customerId2));
@@ -80,14 +80,35 @@ class BankTest {
 
     @Test
     void removeCustomer() {
+        Bank bank = new Bank("Bank of America");
+        String customerId1 = bank.addCustomer("Johnson","Dwayne");
+        Customer customer1 = new Customer(bank,"Johnson","Dwayne");
+        customers.clear();
+        customers.put(customerId1,customer1);
+        customers.remove(customerId1);
+        bank.removeCustomer(customerId1);
+        assertNull(bank.getCustomer(customerId1));
     }
 
     @Test
     void getAllCustomers() {
+        customers.clear();
+        Bank bank = new Bank("Bank of America");
+        String customerId1 = bank.addCustomer("Cena","John");
+        Customer customer1 = new Customer(bank,"Cena","John");
+        customers.put(customerId1,customer1);
+        SortedSet<Customer> testCustomers = bank.getAllCustomers();
+        assertEquals(new TreeSet<Customer>().add(customer1),testCustomers);
     }
 
     @Test
     void getCustomer() {
+        customers.clear();
+        Bank bank = new Bank("Bank of America");
+        String customerId1 = bank.addCustomer("Obama","Barrack");
+        Customer customer1 = new Customer(bank,"Obama","Barrack");
+        customers.put(customerId1,customer1);
+        assertEquals(customers.get(customerId1),bank.getCustomer(customerId1));
     }
 
     @Test
