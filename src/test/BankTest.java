@@ -1,19 +1,13 @@
 
 package test;
 
-import org.junit.Assert.*;
-
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -175,7 +169,9 @@ public class BankTest {
 
 	@Test
 	public void testGetCustomersAccounts() {
-		fail("Not yet implemented");
+		String testCust = cust1.getCustomerId();
+		accountsArrList = bank.getCustomersAccounts(testCust);
+		assertNotNull(accountsArrList);
 	}
 
 }
