@@ -1,9 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,8 +18,8 @@ class BankTest {
     @Test
     void setInsufficientFundsPenalty() {
         Bank bank = new Bank("Bank of America");
-        bank.setInsufficientFundsPenalty(20.0);
-        assertEquals(20,bank.getInsufficientFundsPenalty());
+        bank.setInsufficientFundsPenalty(30.0);
+        assertEquals(30.0,bank.getInsufficientFundsPenalty());
     }
 
     @Test
@@ -112,7 +109,12 @@ class BankTest {
     }
 
     @Test
-    void getCustomer1() {
+    void getCustomerList() {
+        //List<Customer> customerList = new ArrayList<>();
+        Bank bank = new Bank("Bank of America");
+        Customer customer1 = new Customer(bank, "Trump", "Donald");
+        List<Customer> customerList = bank.getCustomer("Trump","Donald");
+        assertTrue(customerList.contains(customer1));
     }
 
     @Test
