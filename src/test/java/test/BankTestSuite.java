@@ -96,7 +96,7 @@ public class BankTestSuite {
 		
 		String testResult = customers.get(customerid1).getFirstName();
 		
-		assertEquals(testResult, null);
+		assertNull(testResult);
 	}
 
 	/**
@@ -148,7 +148,6 @@ public class BankTestSuite {
 	public void testGetCustomerStringString() {
 		customer = bank.getCustomer(cust1LastName, cust1FirstName);
 		
-		assertThat(customer.contains(null), is(false));
 		assertEquals(customer.get(0).getFirstName(), cust1FirstName);
 	}
 
@@ -166,8 +165,7 @@ public class BankTestSuite {
 		
 		accounts = bank.getCustomersAccounts(customerid1);
 		
-		assertThat(accounts.contains(null), is(false));
-		Assert.assertTrue(accounts.contains(savingAccoun));
+		assertTrue(accounts.contains(savingAccoun));
 	}
 
 }

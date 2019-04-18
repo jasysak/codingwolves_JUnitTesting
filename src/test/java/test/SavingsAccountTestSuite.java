@@ -69,7 +69,6 @@ public class SavingsAccountTestSuite {
 		savAccoun1.addInterestTransaction(rate);
 		transactionList = savAccoun1.getTransactions();
 		
-		assertThat(transactionList.contains(null), is(false));
 		assertEquals(transactionList.get(0).getType(), TransactionType.INTEREST);
 	}
 	
@@ -121,8 +120,7 @@ public class SavingsAccountTestSuite {
 		
 		savAccoun1.withdraw(withdrawAmoun);
 		transactionList = savAccoun1.getTransactions();
-		
-		assertThat(transactionList.contains(null), is(false));
+
 		assertEquals(transactionList.get(0).getType(), TransactionType.PENALTY);
 	}
 	

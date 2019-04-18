@@ -49,7 +49,6 @@ public class CustomerTestSuite {
 		customerAccounts.add(customer1.addSavingsAccount(initialBalance, desc));
 		testGetCustAccoun = customer1.getCustomerAccounts();
 		
-		assertThat(testGetCustAccoun.contains(null), is(false));
 		assertEquals(testGetCustAccoun.size(), hasSize(1));
 	}
 
